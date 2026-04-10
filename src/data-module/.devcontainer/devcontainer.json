@@ -53,7 +53,8 @@
                 "yzhang.markdown-all-in-one",
                 "Anthropic.claude-code",
                 "google.geminicodeassist",
-                "google.gemini-cli-vscode-ide-companion"
+                "google.gemini-cli-vscode-ide-companion",
+                "github.vscode-github-actions"
             ],
             "settings": {
 				"terminal.integrated.shell.linux": "/bin/bash",
@@ -70,7 +71,7 @@
     // "forwardPorts": [],
 
     // Uncomment the next line to run commands after the container is created.
-    "postCreateCommand": "echo \"alias poeprecommit='uv run poe precommit'\" >> ~/.bashrc && echo \"alias poecheck='uv run poe check'\" >> ~/.bashrc && echo \"alias poetest='uv run poe test'\" >> ~/.bashrc && echo \"alias poerun='uv run poe precommit; uv run poe check; uv run poe test;'\" >> ~/.bashrc && echo \"alias poeprecommit='uv run poe precommit'\" >> ~/.zshrc && echo \"alias poecheck='uv run poe check'\" >> ~/.zshrc && echo \"alias poetest='uv run poe test'\" >> ~/.zshrc && echo \"alias poerun='uv run poe precommit; uv run poe check; uv run poe test;'\" >> ~/.zshrc"
+    "postCreateCommand": "echo \"alias poeprecommit='uv run --with poethepoet poe precommit'\" >> ~/.bashrc && echo \"alias poecheck='uv run --with poethepoet poe check'\" >> ~/.bashrc && echo \"alias poetest='uv run --with poethepoet poe test'\" >> ~/.bashrc && echo \"alias poerun='uv run --with poethepoet poe precommit; uv run --with poethepoet poe check; uv run --with poethepoet poe test;'\" >> ~/.bashrc && echo \"alias poeprecommit='uv run --with poethepoet poe precommit'\" >> ~/.zshrc && echo \"alias poecheck='uv run --with poethepoet poe check'\" >> ~/.zshrc && echo \"alias poetest='uv run --with poethepoet poe test'\" >> ~/.zshrc && echo \"alias poerun='uv run --with poethepoet poe precommit; uv run --with poethepoet poe check; uv run --with poethepoet poe test;'\" >> ~/.zshrc"
 
     // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
     // "remoteUser": "devcontainer"
