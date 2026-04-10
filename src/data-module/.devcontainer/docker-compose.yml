@@ -2,6 +2,9 @@ services:
   devcontainer:
     container_name: ${DEVCONTAINER_NAME}
     
+    # Give PyTorch workers enough memory!
+    # shm_size: '20gb'
+    
     # load environment variables from a dotenv file
     env_file:
       - .env
@@ -11,6 +14,7 @@ services:
     
     # necessary to keep devcontainer alive
     entrypoint: "sleep infinity"
+
     build:
       context: ..
       dockerfile: Dockerfile
@@ -18,13 +22,22 @@ services:
       target: dev
       # set args for build process
       args:
+        ## Uncomment for GPU support:
         # see Dockerfile for a full list of options
-        INSTALL_DEV_TOOLS: true
+        # FROM_IMAGE: "nvidia/cuda:12.4.1-runtime-ubuntu22.04"
+        VENV_PATH: "/opt/venv"
+        PYTHON_VERSION: "3.13"
+    
+    ## Uncomment for GPU support:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities:
+    #             - gpu
     
     volumes:
       # Mounts the project folder to '/workspace'.
       - ../../../:/workspace:cached
-      # Uncomment to run the container with GPU support
-    # runtime: nvidia
-    # environment:
-    #   - NVIDIA_VISIBLE_DEVICES=all
