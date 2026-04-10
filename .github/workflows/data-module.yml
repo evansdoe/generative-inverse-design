@@ -44,6 +44,8 @@ jobs:
   lint:
     name: Lint & Format
     runs-on: ubuntu-latest
+    env:
+      UV_PROJECT_ROOT: ${{ github.workspace }}/src/data-module
     steps:
       - uses: actions/checkout@v4
 
@@ -52,7 +54,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: uv sync --all-extras
+        run: uv sync --all-groups
 
       - name: Check formatting (black)
         run: uv run black --check .
@@ -66,6 +68,8 @@ jobs:
   license-check:
     name: License Check
     runs-on: ubuntu-latest
+    env:
+      UV_PROJECT_ROOT: ${{ github.workspace }}/src/data-module
     steps:
       - uses: actions/checkout@v4
 
@@ -74,7 +78,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: uv sync --all-extras
+        run: uv sync --all-groups
 
       - name: Export requirements.txt
         # uv alternative to `poetry export` used in the poe task
@@ -87,6 +91,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      UV_PROJECT_ROOT: ${{ github.workspace }}/src/data-module
     steps:
       - uses: actions/checkout@v4
 
@@ -95,7 +101,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: uv sync --all-extras
+        run: uv sync --all-groups
 
       - name: Run pytest
         run: uv run pytest
