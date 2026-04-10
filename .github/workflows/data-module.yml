@@ -44,17 +44,16 @@ jobs:
   lint:
     name: Lint & Format
     runs-on: ubuntu-latest
-    env:
-      UV_PROJECT_ROOT: ${{ github.workspace }}/src/data-module
     steps:
       - uses: actions/checkout@v4
 
       - uses: astral-sh/setup-uv@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: uv sync --all-groups
+        run: uv sync
 
       - name: Check formatting (black)
         run: uv run black --check .
@@ -68,17 +67,16 @@ jobs:
   license-check:
     name: License Check
     runs-on: ubuntu-latest
-    env:
-      UV_PROJECT_ROOT: ${{ github.workspace }}/src/data-module
     steps:
       - uses: actions/checkout@v4
 
       - uses: astral-sh/setup-uv@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: uv sync --all-groups
+        run: uv sync
 
       - name: Export requirements.txt
         # uv alternative to `poetry export` used in the poe task
@@ -91,17 +89,16 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    env:
-      UV_PROJECT_ROOT: ${{ github.workspace }}/src/data-module
     steps:
       - uses: actions/checkout@v4
 
       - uses: astral-sh/setup-uv@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: uv sync --all-groups
+        run: uv sync
 
       - name: Run pytest
         run: uv run pytest
