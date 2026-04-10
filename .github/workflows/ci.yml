@@ -1,0 +1,69 @@
+# Root CI orchestrator — mirrors root .gitlab-ci.yml
+# Detects which sub-projects changed and triggers their pipelines.
+# To add a new sub-project (e.g. src/new-module):
+#   1. Add a path filter entry under `changes` below
+#   2. Add a job that calls .github/workflows/new-module.yml
+#   3. Create .github/workflows/new-module.yml as a reusable workflow
+
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # --------------------------------------------------------------------------
+  # Detect which sub-projects have changed (mirrors GitLab `rules: changes:`)
+  # --------------------------------------------------------------------------
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      data-module: ${{ steps.filter.outputs.data-module }}
+      # add new sub-projects here, e.g.:
+      # new-module: ${{ steps.filter.outputs.new-module }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Path filter
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            data-module:
+              - 'src/data-module/**'
+              - '.github/workflows/data-module.yml'
+              - '.github/workflows/ci.yml'
+            # add new sub-projects here, e.g.:
+            # new-module:
+            #   - 'src/new-module/**'
+            #   - '.github/workflows/new-module.yml'
+
+  # --------------------------------------------------------------------------
+  # Trigger data-module child pipeline (mirrors trigger_child_de_modules)
+  # --------------------------------------------------------------------------
+  data-module:
+    name: data-module pipeline
+    needs: changes
+    if: needs.changes.outputs.data-module == 'true' || github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/data-module.yml
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+
+  # --------------------------------------------------------------------------
+  # Add new sub-project pipelines here, e.g.:
+  # new-module:
+  #   needs: changes
+  #   if: needs.changes.outputs.new-module == 'true' || github.event_name == 'workflow_dispatch'
+  #   uses: ./.github/workflows/new-module.yml
+  #   secrets: inherit
+  #   permissions:
+  #     contents: read
+  #     packages: write
+  #     security-events: write
+  # --------------------------------------------------------------------------
