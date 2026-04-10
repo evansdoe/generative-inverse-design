@@ -20,11 +20,11 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 
-[[tool.poetry.source]]
+# [[tool.poetry.source]]
 # https://python-poetry.org/docs/repositories/#using-a-private-repository
-name = "risc-pypi"
-url = "https://pypiserver.risc-software.at"
-priority = "explicit"
+# name = "risc-pypi"
+# url = "https://pypiserver.risc-software.at"
+# priority = "explicit"
 
 [tool.poetry.dependencies]
 # https://python-poetry.org/docs/dependency-specification/
