@@ -178,6 +178,7 @@ authorized_licenses = [
   "mit and bsd-3-clause",
   "licenseRef-nvidia-proprietary",
   "apache-2.0 and bsd-2-clause",
+  "mpl-2.0 and mit" 
 ]
 # as_regex = true -> e.g. '\bgpl'
 unauthorized_licenses = [
