@@ -71,7 +71,7 @@
     // "forwardPorts": [],
 
     // Uncomment the next line to run commands after the container is created.
-    "postCreateCommand": "echo \"alias poeprecommit='uv run --with poethepoet poe precommit'\" >> ~/.bashrc && echo \"alias poecheck='uv run --with poethepoet poe check'\" >> ~/.bashrc && echo \"alias poetest='uv run --with poethepoet poe test'\" >> ~/.bashrc && echo \"alias poerun='uv run --with poethepoet poe precommit; uv run --with poethepoet poe check; uv run --with poethepoet poe test;'\" >> ~/.bashrc && echo \"alias poeprecommit='uv run --with poethepoet poe precommit'\" >> ~/.zshrc && echo \"alias poecheck='uv run --with poethepoet poe check'\" >> ~/.zshrc && echo \"alias poetest='uv run --with poethepoet poe test'\" >> ~/.zshrc && echo \"alias poerun='uv run --with poethepoet poe precommit; uv run --with poethepoet poe check; uv run --with poethepoet poe test;'\" >> ~/.zshrc"
+    "postCreateCommand": "echo \"alias poeprecommit='poe precommit'\" >> ~/.bashrc && echo \"alias poecheck='poe check'\" >> ~/.bashrc && echo \"alias poetest='poe test'\" >> ~/.bashrc && echo \"alias poerun='poe precommit; poe check; poe test;'\" >> ~/.bashrc && echo \"alias poeprecommit='poe precommit'\" >> ~/.zshrc && echo \"alias poecheck='poe check'\" >> ~/.zshrc && echo \"alias poetest='poe test'\" >> ~/.zshrc && echo \"alias poerun='poe precommit; poe check; poe test;'\" >> ~/.zshrc"
 
     // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
     // "remoteUser": "devcontainer"
