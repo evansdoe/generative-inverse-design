@@ -1,8 +1,12 @@
 ARG VENV_PATH="/opt/venv"
 ARG PYTHON_VERSION=3.13
 
-# stable-20260405-slim
+## stable-20260405-slim
 ARG FROM_IMAGE=debian@sha256:e51bfcd2226c480a5416730e0fa2c40df28b0da5ff562fc465202feeef2f1116
+
+## stable-20250317-slim
+# ARG FROM_IMAGE=debian@sha256:70b337e820bf51d399fa5bfa96a0066fbf22f3aa2c3307e2401b91e2207ac3c3
+
 ARG FROM_IMAGE_RUNTIME=${FROM_IMAGE}
 ARG FROM_IMAGE_DEV=build
 
@@ -34,6 +38,9 @@ RUN apt-get update && apt-get install -yq \
 # uv version: latest
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+# # uv version: 0.6.12
+# COPY --from=ghcr.io/astral-sh/uv@sha256:515b886e8eb99bcf9278776d8ea41eb4553a794195ef5803aa7ca6258653100d /uv /uvx /bin/
+
 # Setup directory structure
 # https://github.com/GoogleContainerTools/kaniko/issues/1508
 # seems like remnant of an earlier kaniko implementation
@@ -48,7 +55,8 @@ COPY pyproject.toml *.lock README* ./
 # ensure Python uses this virtual environment
 ENV VIRTUAL_ENV=$VENV_PATH \
     UV_PROJECT_ENVIRONMENT=${VENV_PATH} \
-    PATH="$VENV_PATH/bin:$PATH"
+    PATH="$VENV_PATH/bin:$PATH" \
+    UV_HTTP_TIMEOUT=300
 RUN uv venv --python $PYTHON_VERSION && uv sync && uv cache prune --ci
 
 # ==============================================================================
@@ -90,7 +98,7 @@ RUN apt-get update && apt-get install -yq \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # install development dependencies
-RUN uv sync --all-extras && uv cache prune --ci
+RUN uv sync --all-extras --all-groups && uv cache prune --ci
 
 # Set timezone
 ARG TZ=Europe/Vienna
