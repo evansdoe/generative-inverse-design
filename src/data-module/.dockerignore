@@ -3,7 +3,8 @@
 
 # but
 !/pyproject.toml
-!/poetry.lock
+!/uv.lock
+!/README.md
 !/data_module/**/*.py
 
 # but but
