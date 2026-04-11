@@ -87,6 +87,7 @@ coverage.xml
 cover/
 *-junit.xml
 liccheck_reporting.txt
+requirements.txt
 
 # credentials and similar
 .env-secrets
