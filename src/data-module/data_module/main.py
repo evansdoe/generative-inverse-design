@@ -1,5 +1,3 @@
-
-
 def main() -> None:
     print("Project data-module is set up!")
 
