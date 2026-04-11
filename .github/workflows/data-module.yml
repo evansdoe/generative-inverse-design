@@ -42,7 +42,7 @@ jobs:
   # Stage: test — lint, license check, pytest
   # --------------------------------------------------------------------------
   lint:
-    name: Lint & Format
+    name: Lint, Format & License Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -59,35 +59,8 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras --all-groups
 
-      - name: Check formatting (black)
-        run: uv run poe _check_format
-
-      - name: Check import order (isort)
-        run: uv run poe _check_sort_imports
-
-      - name: Lint (ruff)
-        run: uv run poe _check_lint
-
-  license-check:
-    name: License Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: astral-sh/setup-uv@v5
-        with:
-          version: "0.6.12"
-          enable-cache: true
-          cache-dependency-glob: "src/data-module/uv.lock"
-
-      - name: Install Python
-        run: uv python install ${{ env.PYTHON_VERSION }}
-
-      - name: Install dependencies
-        run: uv sync --all-extras --all-groups
-
-      - name: Check licenses
-        run: uv run poe check_licenses
+      - name: Check format, imports, lint & licenses
+        run: uv run poe check
 
   test:
     name: Test
@@ -202,7 +175,7 @@ jobs:
   build-runtime-image:
     name: Docker — runtime stage
     runs-on: ubuntu-latest
-    needs: [test, lint, license-check, build-image]
+    needs: [test, lint, build-image]
     permissions:
       contents: read
       packages: write
